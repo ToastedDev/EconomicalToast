@@ -4,6 +4,7 @@
 		"rootDir": "src",
 		"outDir": "dist",
 		"tsBuildInfoFile": "dist/.tsbuildinfo",
+		"noUnusedLocals": false,
 		"baseUrl": ".",
 		"paths": {
 			"~/*": ["src/*"]

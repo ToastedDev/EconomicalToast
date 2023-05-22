@@ -2,8 +2,9 @@ import { ApplyOptions } from "@sapphire/decorators";
 import type { Store } from "@sapphire/framework";
 import { Listener } from "@sapphire/framework";
 import { blue, gray, green, magenta, magentaBright, white, yellow } from "colorette";
+import { env } from "~/lib/env";
 
-const dev = process.env.NODE_ENV !== "production";
+const dev = env.NODE_ENV !== "production";
 
 @ApplyOptions<Listener.Options>({ once: true })
 export class UserEvent extends Listener {

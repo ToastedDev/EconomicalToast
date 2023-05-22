@@ -1,9 +1,11 @@
-import { LogLevel, SapphireClient } from "@sapphire/framework";
-import { GatewayIntentBits } from "discord.js";
 import "~/lib/setup";
 
+import { LogLevel, SapphireClient } from "@sapphire/framework";
+import { GatewayIntentBits } from "discord.js";
+import { fetchPrefix } from "./lib/utils/fetchPrefix";
+
 const client = new SapphireClient({
-  defaultPrefix: "!",
+  fetchPrefix,
   caseInsensitiveCommands: true,
   logger: {
     level: LogLevel.Debug
