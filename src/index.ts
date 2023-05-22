@@ -1,6 +1,6 @@
 import { LogLevel, SapphireClient } from "@sapphire/framework";
 import { GatewayIntentBits } from "discord.js";
-import "./lib/setup";
+import "~/lib/setup";
 
 const client = new SapphireClient({
   defaultPrefix: "!",

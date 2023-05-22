@@ -7,7 +7,6 @@ import {
 } from "@sapphire/framework";
 import { cyan } from "colorette";
 import type { APIUser, Guild, User } from "discord.js";
-import { env } from "./env";
 
 export function logSuccessCommand(payload: ContextMenuCommandSuccessPayload | ChatInputCommandSuccessPayload | MessageCommandSuccessPayload): void {
   let successLoggerData: ReturnType<typeof getSuccessLoggerData>;
@@ -45,8 +44,4 @@ function getAuthorInfo(author: User | APIUser) {
 function getGuildInfo(guild: Guild | null) {
   if (guild === null) return "Direct Messages";
   return `${guild.name}[${cyan(guild.id)}]`;
-}
-
-export function getGuildId() {
-  return env.GUILD_ID ? [env.GUILD_ID] : [];
 }
