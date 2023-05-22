@@ -11,8 +11,9 @@ datasource db {
 }
 
 model Guild {
-  id     String  @id
-  prefix String?
+  id      String  @id
+  prefix  String?
+  dropped Boolean @default(false)
 }
 
 model User {

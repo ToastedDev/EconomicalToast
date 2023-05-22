@@ -19,6 +19,7 @@ module.exports = {
     "prefer-const": "error",
     "no-var": "error",
     "no-async-promise-executor": "off",
+    "no-mixed-spaces-and-tabs": "off",
     "@typescript-eslint/array-type": "error",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/consistent-type-assertions": "error",

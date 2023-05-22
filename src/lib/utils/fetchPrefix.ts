@@ -1,6 +1,6 @@
 import type { Message } from "discord.js";
+import { prefix } from "~/consts";
 import { db } from "../db";
-import { env } from "../env";
 
 export async function fetchPrefix(message: Message) {
   const guild = await db.guild.findFirst({
@@ -8,5 +8,5 @@ export async function fetchPrefix(message: Message) {
       id: message.guild!.id
     }
   });
-  return guild?.prefix ?? env.PREFIX;
+  return guild?.prefix ?? prefix;
 }
