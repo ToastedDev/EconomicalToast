@@ -39,6 +39,8 @@
 		"start": "tsc-alias && node dist/index.js",
 		"dev": "tsc-watch --onSuccess \"npm run start\"",
 		"build": "tsc && tsc-alias",
+		"typecheck": "tsc --noEmit",
+		"lint": "eslint .",
 		"format": "prettier --write \"src/\"",
 		"postinstall": "prisma generate"
 	},
