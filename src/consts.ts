@@ -6,4 +6,8 @@ export const currencyName = "toast";
 export const droppedAmount = 10;
 
 import type { ColorResolvable } from "discord.js";
-export const color: ColorResolvable = "Orange";
+export const colors: Record<"primary" | "success" | "danger", ColorResolvable> = {
+  primary: "Orange",
+  success: "Green",
+  danger: "Red"
+};

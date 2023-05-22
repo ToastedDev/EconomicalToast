@@ -2,7 +2,7 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { Command } from "@sapphire/framework";
 import type { MessagePayload } from "discord.js";
 import { EmbedBuilder, Message, type InteractionReplyOptions, type MessageReplyOptions } from "discord.js";
-import { color, currency } from "~/consts";
+import { colors, currency } from "~/consts";
 import { db } from "~/lib/db";
 import { getGuildId } from "~/lib/utils/getGuildId";
 
@@ -69,7 +69,7 @@ export class UserCommand extends Command {
           .setDescription(
             [`**Wallet**: ${currency}${data.wallet.toLocaleString()}`, `**Bank**: ${currency}${data.bank.toLocaleString()}`].join("\n")
           )
-          .setColor(color)
+          .setColor(colors.primary)
       ]
     });
   }

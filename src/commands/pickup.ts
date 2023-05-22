@@ -2,7 +2,7 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { Command } from "@sapphire/framework";
 import type { MessagePayload } from "discord.js";
 import { EmbedBuilder, Message, type InteractionReplyOptions, type MessageReplyOptions } from "discord.js";
-import { color, currency, currencyName, droppedAmount } from "~/consts";
+import { colors, currency, currencyName, droppedAmount } from "~/consts";
 import { db } from "~/lib/db";
 import { getGuildId } from "~/lib/utils/getGuildId";
 
@@ -49,7 +49,7 @@ export class UserCommand extends Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(`No one has dropped any ${currencyName} yet. Make sure to wait for the message I send when someone does!`)
-              .setColor(color)
+              .setColor(colors.danger)
           ],
           ephemeral: true
         });
@@ -94,7 +94,7 @@ export class UserCommand extends Command {
             iconURL: user.displayAvatarURL()
           })
           .setDescription(`Picked up ${currency}${droppedAmount}.`)
-          .setColor(color)
+          .setColor(colors.primary)
       ]
     });
   }
