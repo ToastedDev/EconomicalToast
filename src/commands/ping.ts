@@ -7,9 +7,7 @@ import { getGuildId } from "~/lib/utils/getGuildId";
   description: "ping pong"
 })
 export class UserCommand extends Command {
-  // Register Chat Input and Context Menu command
   public override registerApplicationCommands(registry: Command.Registry) {
-    // Register Chat Input command
     registry.registerChatInputCommand(
       {
         name: this.name,
@@ -21,18 +19,11 @@ export class UserCommand extends Command {
     );
   }
 
-  // Message command
   public async messageRun(message: Message) {
     return this.sendPing(message);
   }
 
-  // Chat Input (slash) command
   public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-    return this.sendPing(interaction);
-  }
-
-  // Context Menu command
-  public async contextMenuRun(interaction: Command.ContextMenuCommandInteraction) {
     return this.sendPing(interaction);
   }
 

@@ -10,9 +10,7 @@ import { getGuildId } from "~/lib/utils/getGuildId";
   description: `Pick up ${currencyName} that someone dropped.`
 })
 export class UserCommand extends Command {
-  // Register Chat Input and Context Menu command
   public override registerApplicationCommands(registry: Command.Registry) {
-    // Register Chat Input command
     registry.registerChatInputCommand(
       {
         name: this.name,
@@ -24,12 +22,10 @@ export class UserCommand extends Command {
     );
   }
 
-  // Message command
   public async messageRun(message: Message) {
     return this.respond(message);
   }
 
-  // Chat Input (slash) command
   public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     return this.respond(interaction);
   }
