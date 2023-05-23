@@ -18,12 +18,13 @@ export class UserEvent extends Listener<typeof Events.MessageCreate> {
         id: message.guild.id
       }
     });
+    if (data && data.dropped) return;
+
     const maxChance = 10;
     const chance = random(1, maxChance);
     this.container.client.logger.debug("Dropped chance:", chance);
 
     if (chance === maxChance) {
-      if (data && data.dropped) return;
       message.channel.send({
         embeds: [
           new EmbedBuilder()
