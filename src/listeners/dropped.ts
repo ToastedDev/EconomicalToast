@@ -18,7 +18,7 @@ export class UserEvent extends Listener<typeof Events.MessageCreate> {
         id: message.guild.id
       }
     });
-    const maxChance = 5;
+    const maxChance = 10;
     const chance = random(1, maxChance);
     this.container.client.logger.debug("Dropped chance:", chance);
 
