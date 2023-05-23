@@ -19,14 +19,14 @@ const client = new SapphireClient({
         type: ActivityType.Playing
       }
     ]
-  }
+  },
+  shards: "auto"
 });
 
 const main = async () => {
   try {
-    client.logger.info("Logging in");
+    client.logger.info("Logging in...");
     await client.login();
-    client.logger.info("logged in");
   } catch (error) {
     client.logger.fatal(error);
     client.destroy();

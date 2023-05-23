@@ -11,6 +11,8 @@ export class UserEvent extends Listener {
   private readonly style = dev ? yellow : blue;
 
   public run() {
+    this.container.client.logger.info(`Logged in as ${this.container.client.user!.tag}!`);
+
     this.printBanner();
     this.printStoreDebugInformation();
   }
