@@ -1,7 +1,7 @@
 import "~/lib/setup";
 
 import { LogLevel, SapphireClient } from "@sapphire/framework";
-import { GatewayIntentBits } from "discord.js";
+import { ActivityType, GatewayIntentBits } from "discord.js";
 import { fetchPrefix } from "./lib/utils/fetchPrefix";
 
 const client = new SapphireClient({
@@ -11,7 +11,15 @@ const client = new SapphireClient({
     level: LogLevel.Debug
   },
   intents: [GatewayIntentBits.DirectMessages, GatewayIntentBits.GuildMessages, GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent],
-  loadMessageCommandListeners: true
+  loadMessageCommandListeners: true,
+  presence: {
+    activities: [
+      {
+        name: "with money",
+        type: ActivityType.Playing
+      }
+    ]
+  }
 });
 
 const main = async () => {
