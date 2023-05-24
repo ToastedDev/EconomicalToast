@@ -2,7 +2,7 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { Command } from "@sapphire/framework";
 import type { MessagePayload } from "discord.js";
 import { EmbedBuilder, Message, type InteractionReplyOptions, type MessageReplyOptions } from "discord.js";
-import { colors, currency, currencyName, droppedAmount } from "~/consts";
+import { colors, currency, currencyName, rewards } from "~/consts";
 import { db } from "~/lib/db";
 import { getGuildId } from "~/lib/utils/getGuildId";
 
@@ -68,11 +68,11 @@ export class UserCommand extends Command {
       },
       create: {
         id: user.id,
-        wallet: droppedAmount
+        wallet: rewards.dropped
       },
       update: {
         wallet: {
-          increment: droppedAmount
+          increment: rewards.dropped
         }
       }
     });
@@ -93,7 +93,7 @@ export class UserCommand extends Command {
             name: user.tag,
             iconURL: user.displayAvatarURL()
           })
-          .setDescription(`Picked up ${currency}${droppedAmount}.`)
+          .setDescription(`Picked up ${currency}${rewards.dropped}.`)
           .setColor(colors.primary)
       ]
     });

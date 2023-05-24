@@ -2,7 +2,7 @@ import { ApplyOptions } from "@sapphire/decorators";
 import type { Events } from "@sapphire/framework";
 import { Listener } from "@sapphire/framework";
 import { EmbedBuilder, type Message } from "discord.js";
-import { colors, currency, droppedAmount } from "~/consts";
+import { colors, currency, rewards } from "~/consts";
 import { db } from "~/lib/db";
 import { random } from "~/lib/utils/random";
 
@@ -28,7 +28,7 @@ export class UserEvent extends Listener<typeof Events.MessageCreate> {
       message.channel.send({
         embeds: [
           new EmbedBuilder()
-            .setDescription(`It seems like someone has dropped ${currency}${droppedAmount}. Pick it up by typing \`.pickup\`!`)
+            .setDescription(`It seems like someone has dropped ${currency}${rewards.dropped}. Pick it up by typing \`.pickup\`!`)
             .setColor(colors.primary)
         ]
       });
