@@ -3,6 +3,7 @@ import { Precondition } from "@sapphire/framework";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import type { ChatInputCommandInteraction, Message, Snowflake } from "discord.js";
+import { env } from "~/lib/env";
 
 export interface CooldownPreconditionContext extends AllFlowsPrecondition.Context {
 	scope?: BucketScope;
@@ -26,7 +27,10 @@ export class UserPrecondition extends Precondition {
 
   private async ratelimit(userId: string, command: Command, context: CooldownPreconditionContext): AllFlowsPrecondition.AsyncResult {
     const ratelimit = new Ratelimit({
-      redis: Redis.fromEnv(),
+      redis: new Redis({
+        url: env.UPSTASH_REDIS_REST_URL,
+        token: env.UPSTASH_REDIS_REST_TOKEN
+      }),
       limiter: Ratelimit.slidingWindow(1, `${context.delay! / 1000} s`),
       prefix: "economicaltoast"
     });

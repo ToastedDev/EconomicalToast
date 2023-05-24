@@ -3,7 +3,9 @@ import { z } from "zod";
 const envVariables = z.object({
   DISCORD_TOKEN: z.string(),
   GUILD_ID: z.string().optional(),
-  NODE_ENV: z.enum(["development", "production"]).default("development")
+  NODE_ENV: z.enum(["development", "production"]).default("development"),
+  UPSTASH_REDIS_REST_URL: z.string(),
+  UPSTASH_REDIS_REST_TOKEN: z.string()
 });
 
 const parsed = envVariables.safeParse(process.env);

@@ -5,7 +5,8 @@ export const currencyName = "toast";
 
 export const rewards = {
   dropped: 10,
-  daily: 5000
+  daily: 5000,
+  weekly: 10000
 };
 
 import type { ColorResolvable } from "discord.js";

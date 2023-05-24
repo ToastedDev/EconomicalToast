@@ -20,7 +20,10 @@ const client = new SapphireClient({
       }
     ]
   },
-  shards: "auto"
+  shards: "auto",
+  defaultCooldown: {
+    delay: 10000
+  }
 });
 
 const main = async () => {
