@@ -9,8 +9,8 @@ import { getGuildId } from "~/lib/utils/getGuildId";
 import { unabbreviate } from "~/lib/utils/unabbreviate";
 
 @ApplyOptions<Command.Options>({
-  description: `Deposit some ${currencyName} into your bank account.`,
-  aliases: ["dep"]
+  description: `Withdraw some ${currencyName} into your wallet.`,
+  aliases: ["with"]
 })
 export class UserCommand extends Command {
   public override registerApplicationCommands(registry: Command.Registry) {
@@ -20,7 +20,7 @@ export class UserCommand extends Command {
           .setName(this.name)
           .setDescription(this.description)
           .addStringOption((option) =>
-            option.setName("amount").setDescription(`The amount of ${currencyName} to deposit into your bank account.`).setRequired(true)
+            option.setName("amount").setDescription(`The amount of ${currencyName} to withdraw into your wallet.`).setRequired(true)
           ),
       {
         guildIds: getGuildId()
@@ -57,7 +57,7 @@ export class UserCommand extends Command {
 
     if (!data)
       return reply({
-        embeds: [new EmbedBuilder().setDescription(`You don't have enough ${currencyName} in your wallet.`).setColor(colors.danger)]
+        embeds: [new EmbedBuilder().setDescription(`You don't have enough ${currencyName} in your bank account.`).setColor(colors.danger)]
       });
 
     let amountTransferred = 0;
@@ -68,23 +68,23 @@ export class UserCommand extends Command {
         },
         data: {
           wallet: {
-            decrement: data.wallet
+            increment: data.bank
           },
           bank: {
-            increment: data.wallet
+            decrement: data.bank
           }
         }
       });
-      amountTransferred = data.wallet;
+      amountTransferred = data.bank;
     } else {
       const amountNum = unabbreviate(amount);
       if (isNaN(amountNum) || amountNum % 1 != 0 || amountNum <= 0)
         return reply({
           embeds: [new EmbedBuilder().setDescription('The amount must be a whole number, or "all".').setColor(colors.danger)]
         });
-      if (data.wallet < amountNum)
+      if (data.bank < amountNum)
         return reply({
-          embeds: [new EmbedBuilder().setDescription(`You don't have enough ${currencyName} in your wallet.`).setColor(colors.danger)]
+          embeds: [new EmbedBuilder().setDescription(`You don't have enough ${currencyName} in your bank account.`).setColor(colors.danger)]
         });
 
       await db.user.update({
@@ -93,10 +93,10 @@ export class UserCommand extends Command {
         },
         data: {
           wallet: {
-            decrement: amountNum
+            increment: amountNum
           },
           bank: {
-            increment: amountNum
+            decrement: amountNum
           }
         }
       });
@@ -114,7 +114,7 @@ export class UserCommand extends Command {
         new EmbedBuilder()
           .addFields(
             {
-              name: "Deposited",
+              name: "Withdrew",
               value: `${currency}${amountTransferred.toLocaleString()}`
             },
             {
