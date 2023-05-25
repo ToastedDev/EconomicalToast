@@ -15,3 +15,8 @@ export const colors: Record<"primary" | "success" | "danger", ColorResolvable> =
   success: "Green",
   danger: "Red"
 };
+
+import { join } from "path";
+
+export const rootDir = join(__dirname, "..", "..");
+export const srcDir = join(rootDir, "src");
