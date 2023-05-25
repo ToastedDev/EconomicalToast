@@ -24,13 +24,23 @@ export class UserPrecondition extends Precondition {
   }
 
   private async ratelimit(userId: string, command: Command, context: CooldownPreconditionContext): AllFlowsPrecondition.AsyncResult {
+    await db.user.upsert({
+      where: {
+        id: userId
+      },
+      create: {
+        id: userId
+      },
+      update: {}
+    });
+
     const data = await db.cooldown.findFirst({
       where: {
         userId,
         command: command.name
       }
     });
-    if (data && data.expiresAt.getTime() < Date.now() + context.delay)
+    if (data && data.expiresAt.getTime() > Date.now())
       return this.error({
         message: `Calm down son, you're on cooldown! Try again <t:${(data.expiresAt.getTime() / 1000).toFixed(0)}:R>.`
       });

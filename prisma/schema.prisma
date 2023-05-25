@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./db.sqlite"
+  provider     = "sqlite"
+  url          = "file:./db.sqlite"
+  relationMode = "prisma"
 }
 
 model Guild {
