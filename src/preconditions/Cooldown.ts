@@ -1,9 +1,7 @@
 import type { AllFlowsPrecondition, BucketScope, Command } from "@sapphire/framework";
 import { Precondition } from "@sapphire/framework";
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
 import type { ChatInputCommandInteraction, Message, Snowflake } from "discord.js";
-import { env } from "~/lib/env";
+import { db } from "~/lib/db";
 
 export interface CooldownPreconditionContext extends AllFlowsPrecondition.Context {
 	scope?: BucketScope;
@@ -26,19 +24,33 @@ export class UserPrecondition extends Precondition {
   }
 
   private async ratelimit(userId: string, command: Command, context: CooldownPreconditionContext): AllFlowsPrecondition.AsyncResult {
-    const ratelimit = new Ratelimit({
-      redis: new Redis({
-        url: env.UPSTASH_REDIS_REST_URL,
-        token: env.UPSTASH_REDIS_REST_TOKEN
-      }),
-      limiter: Ratelimit.slidingWindow(1, `${context.delay! / 1000} s`),
-      prefix: "economicaltoast"
+    const data = await db.cooldown.findFirst({
+      where: {
+        userId,
+        command: command.name
+      }
     });
-    const { success, reset } = await ratelimit.limit(`${userId}:${command.name}`);
-    if (!success)
+    if (data && data.expiresAt.getTime() < Date.now() + context.delay)
       return this.error({
-        message: `Calm down there son, you're on cooldown! Try again <t:${(reset / 1000).toFixed(0)}:R>.`
+        message: `Calm down son, you're on cooldown! Try again <t:${(data.expiresAt.getTime() / 1000).toFixed(0)}:R>.`
       });
-    else return this.ok();
+    else {
+      if (data)
+        await db.cooldown.delete({
+          where: {
+            id: data.id
+          }
+        });
+
+      await db.cooldown.create({
+        data: {
+          userId,
+          command: command.name,
+          expiresAt: new Date(Date.now() + context.delay)
+        }
+      });
+
+      return this.ok();
+    }
   }
 }

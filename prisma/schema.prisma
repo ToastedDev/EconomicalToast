@@ -17,7 +17,16 @@ model Guild {
 }
 
 model User {
-  id     String @id
-  wallet Int    @default(0)
-  bank   Int    @default(0)
+  id        String     @id
+  wallet    Int        @default(0)
+  bank      Int        @default(0)
+  cooldowns Cooldown[]
+}
+
+model Cooldown {
+  id        String   @id @default(cuid())
+  command   String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
 }
